@@ -8,12 +8,17 @@ int String::computeLength(const char * str)
 	while (str[++i] != 0); 
 	return i;
 }
-int String::indexOf(int startLoop, int endLoop, const String& str)
+int String::indexOf(bool leftToRight, const String& str)
 {
 	if (length_ < str.length_)
 		throw "LogicException";
+
+	int startLoop = !leftToRight ? length_ - str.length_ : 0,
+		endLoop = leftToRight ? length_ - str.length_ : -1,
+		shift = leftToRight ? 1 : -1;
+
 	bool flag;
-	for (int i = startLoop; i != endLoop; (startLoop < endLoop)? i++ : i--) {
+	for (int i = startLoop; i != endLoop; i += shift) {
 		flag = false;
 		for (int j = 0; j < str.length_ && !flag; j++) {
 			if (str_[i + j] != str.str_[j])
@@ -86,7 +91,7 @@ int String::firstIndexOf(char ch)
 }
 int String::firstIndexOf(const String& str)
 {
-	return indexOf(0, length_ - str.length_, str);
+	return indexOf(true, str);
 }
 int String::lastIndexOf(char ch)
 {
@@ -98,7 +103,7 @@ int String::lastIndexOf(char ch)
 }
 int String::lastIndexOf(const String& str)
 {
-	return indexOf(length_ - str.length_, -1, str);
+	return indexOf(false, str);
 }
 
 bool String::contains(const String & str)
@@ -134,13 +139,13 @@ String& String::remove(int startWith, int length)
 {
 	if (startWith + length > length_ || startWith < 0 || length < 1)
 		throw "LogicException";
-	String* result = new String(length_ - length + 1);
+	String* result = new String(length_ - length);
 
 	for (int i = 0; i < startWith; i++) {
 		(*result).str_[i] = str_[i];
 	}
 
-	for (int i = startWith + length; i < (*result).length_ + length + 1; i++) {
+	for (int i = startWith + length; i < (*result).length_ + length; i++) {
 		(*result).str_[i - length] = str_[i];
 	}
 

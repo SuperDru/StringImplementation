@@ -1,7 +1,7 @@
 #include "String.h"
 
 int main() {
-	String st1(" 1String1");
+	String st1("1String1");
 	String st2("    String2     ");
 
 	cout << "String1 = " << st1 << endl;
