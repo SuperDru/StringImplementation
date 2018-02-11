@@ -20,8 +20,9 @@ int main() {
 	cout << "ToUpperCase st1 - " << st1.toUpperCase() << endl;
 	cout << "ToLowerCase st1 - " << st1.toLowerCase() << endl;
 	cout << "Char array + st1 - " + st1 << endl;
-	cout << st1 + " st1 + Char array" << endl;
+	cout << st1 + " st1 + Char array" + st2 << endl;
 	cout << st1 + ' ' + st2 << endl;
+	cout << st1 + st2;
 
 	st1 = st2 + st1;
 

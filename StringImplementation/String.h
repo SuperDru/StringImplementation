@@ -12,7 +12,7 @@ private:
 	char* str_;
 	String(int length);
 	int computeLength(const char * str);
-	int indexOf(int startLoop, int endLoop, bool plus, const String& str);
+	int indexOf(int startLoop, int endLoop, const String& str);
 public:
 	//------------
 	//Constructors

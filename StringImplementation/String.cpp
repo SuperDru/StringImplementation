@@ -8,12 +8,12 @@ int String::computeLength(const char * str)
 	while (str[++i] != 0); 
 	return i;
 }
-int String::indexOf(int startLoop, int endLoop, bool plus, const String& str)
+int String::indexOf(int startLoop, int endLoop, const String& str)
 {
 	if (length_ < str.length_)
 		throw "LogicException";
 	bool flag;
-	for (int i = startLoop; i != endLoop; plus? i++ : i--) {
+	for (int i = startLoop; i != endLoop; (startLoop < endLoop)? i++ : i--) {
 		flag = false;
 		for (int j = 0; j < str.length_ && !flag; j++) {
 			if (str_[i + j] != str.str_[j])
@@ -63,7 +63,8 @@ String::String(): length_(0){
 //Desctructor
 String::~String()
 {
-	delete[]str_;
+	if (str_ != NULL)
+		delete[]str_;
 }
 
 //-------------------------------------------------------------------
@@ -85,7 +86,7 @@ int String::firstIndexOf(char ch)
 }
 int String::firstIndexOf(const String& str)
 {
-	return indexOf(0, length_ - str.length_, true, str);
+	return indexOf(0, length_ - str.length_, str);
 }
 int String::lastIndexOf(char ch)
 {
@@ -97,7 +98,7 @@ int String::lastIndexOf(char ch)
 }
 int String::lastIndexOf(const String& str)
 {
-	return indexOf(length_ - str.length_, -1, false, str);
+	return indexOf(length_ - str.length_, -1, str);
 }
 
 bool String::contains(const String & str)
