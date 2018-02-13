@@ -11,7 +11,7 @@ int String::computeLength(const char * str)
 int String::indexOf(bool leftToRight, const String& str)
 {
 	if (length_ < str.length_)
-		throw "LogicException";
+		return -1;
 
 	int startLoop = !leftToRight ? length_ - str.length_ : 0,
 		endLoop = leftToRight ? length_ - str.length_ : -1,
@@ -19,12 +19,12 @@ int String::indexOf(bool leftToRight, const String& str)
 
 	bool flag;
 	for (int i = startLoop; i != endLoop; i += shift) {
-		flag = false;
-		for (int j = 0; j < str.length_ && !flag; j++) {
+		flag = true;
+		for (int j = 0; j < str.length_ && flag; j++) {
 			if (str_[i + j] != str.str_[j])
-				flag = true;
+				flag = false;
 		}
-		if (!flag) return i;
+		if (flag) return i;
 	}
 	return -1;
 }
@@ -57,6 +57,8 @@ String::String(int length, char ch) : length_(length)
 }
 String::String(int length): length_(length)
 {
+	if (length < 0)
+		throw "IndexOutOfBoundsException";
 	str_ = new char[length + 1];
 	str_[length] = 0;
 }
@@ -135,18 +137,20 @@ String& String::remove(int index)
 {
 	return remove(index, 1);
 }
-String& String::remove(int startWith, int length)
+String& String::remove(int startWith, int removingLength)
 {
-	if (startWith + length > length_ || startWith < 0 || length < 1)
+	if (startWith + removingLength > length_ || startWith < 0 || removingLength < 1)
 		throw "LogicException";
-	String* result = new String(length_ - length);
 
-	for (int i = 0; i < startWith; i++) {
+	String* result = new String(length_ - removingLength);
+
+	int i = 0;
+	for (i; i < startWith; i++) {
 		(*result).str_[i] = str_[i];
 	}
 
-	for (int i = startWith + length; i < (*result).length_ + length; i++) {
-		(*result).str_[i - length] = str_[i];
+	for (i += removingLength; i < length_; i++) {
+		(*result).str_[i - removingLength] = str_[i];
 	}
 
 	return *result;
@@ -169,11 +173,13 @@ String& String::trimEnd()
 //Method returns substring from the string
 String & String::substring(int startWith, int length)
 {
-	if (startWith + length> length_ || startWith < 0 || length < 1)
+	if (startWith + length > length_ || startWith < 0 || length < 1)
 		throw "LogicException";
+
 	String* result = new String(length);
-	for (int i = startWith; i < startWith + length; i++) {
-		(*result).str_[i - startWith] = str_[i];
+
+	for (int i = 0; i < length; i++) {
+		(*result).str_[i] = str_[i + startWith];
 	}
 	return *result;
 }
@@ -183,13 +189,15 @@ String & String::substring(int startWith, int length)
 //Overloading operators
 String& String::operator+(const String & str)
 {
-	String* result = new String(str.length_ + length_);
+	int endLength = str.length_ + length_;
+	String* result = new String(endLength);
 
-	for (int i = 0; i < length_; i++) {
+	int i = 0;
+	for (i; i < length_; i++) {
 		(*result).str_[i] = str_[i];
 	}
 
-	for (int i = length_; i < str.length_ + length_; i++) {
+	for (i; i < endLength; i++) {
 		(*result).str_[i] = str.str_[i - length_];
 	}
 	return *result;
