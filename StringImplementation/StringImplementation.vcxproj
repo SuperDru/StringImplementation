@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IndexOutOfBoundsException.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>
   <ItemGroup>

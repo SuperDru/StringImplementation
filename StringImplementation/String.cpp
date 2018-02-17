@@ -58,7 +58,7 @@ String::String(int length, char ch) : length_(length)
 String::String(int length): length_(length)
 {
 	if (length < 0)
-		throw "IndexOutOfBoundsException";
+		throw  IndexOutOfBoundsException("Index out of bounds of the array");
 	str_ = new char[length + 1];
 	str_[length] = 0;
 }
@@ -140,7 +140,7 @@ String& String::remove(int index)
 String& String::remove(int startWith, int removingLength)
 {
 	if (startWith + removingLength > length_ || startWith < 0 || removingLength < 1)
-		throw "LogicException";
+		throw range_error("Incorrect removing arguments.");
 
 	String* result = new String(length_ - removingLength);
 
@@ -174,7 +174,7 @@ String& String::trimEnd()
 String & String::substring(int startWith, int length)
 {
 	if (startWith + length > length_ || startWith < 0 || length < 1)
-		throw "LogicException";
+		throw range_error("Incorrect ");
 
 	String* result = new String(length);
 
@@ -259,9 +259,9 @@ String & String::operator=(char ch)
 
 void* operator new[](size_t const size)
 {
-	void* result = malloc( size);
+	void* result = malloc(size);
 	if (result == NULL) {
-		throw "MemoryException";
+		throw bad_alloc();
 	}
 	return result;
 }
@@ -269,7 +269,7 @@ void* operator new[](size_t const size)
 char String::operator[](int i)
 {
 	if (i < 0 || i > length_)
-		throw "IndexOutOfArrayException";
+		throw IndexOutOfBoundsException("Index out of bounds of the array");
 	return str_[i];
 }
 

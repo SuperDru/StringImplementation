@@ -13,10 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Заголовочные файлы\Exceptions">
+      <UniqueIdentifier>{4ecf9f06-76fe-483b-8378-7ce4ef3aac07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="String.h">
       <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexOutOfBoundsException.h">
+      <Filter>Заголовочные файлы\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

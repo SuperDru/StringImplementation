@@ -1,6 +1,6 @@
 #include <iostream>
 #include <conio.h>
-
+#include "IndexOutOfBoundsException.h"
 
 using namespace std;
 
